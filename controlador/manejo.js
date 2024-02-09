@@ -136,6 +136,25 @@ function detallePersonaje (datos){
     $(caractPlaneta).append(textoPlaneta);
     fichas_def(datos.transformations,'.detallesPersonajes');
 }
+// elimina elements de interfaz visual
+function reseteoIterfaz () {
+    $('.carta').remove();
+    $('.contenedorCaract').remove();
+    $('.contenedorPlaneta').remove();
+}
+// reseteado de formularios
+function reseteoformulario (paginas=null, nombre=null, grupo=null) {
+    $(paginas).val('');
+    $(nombre).val('');
+    $(grupo).val('');
+}
+function ocultarMostraElemHeader() {
+    if ($('.caracteristicas').is(':visible')) {
+        $('.caracteristicas').hide();
+    } else if ($('.caracteristicas').is(':hidden') ) {
+        $('.caracteristicas').show();
+    } 
+}
 // funcion que pide los datos de forma asincrona a la API. En funcion de la clase
 // se pide un dato u otro
 function peticionAsincrona(clase) {
@@ -159,12 +178,11 @@ function peticionAsincrona(clase) {
             links=data.links;
             for(let i = 0; i<datosIniciales.length;i++){
                 $("#" + i + ".transformacion").on("click", function(e){
-                    if ($('.caracteristicas').is(':visible')) {
-                        $('.caracteristicas').hide();
-                    } 
-                    $('.carta').remove();
-                    $('.contenedorCaract').remove();
-                    $('.contenedorPlaneta').remove();
+                    ocultarMostraElemHeader();
+                    //reseteo formularios
+                    reseteoformulario (paginas=null, '#nombre', '#grupo')
+                    //elimino elementos presentes
+                    reseteoIterfaz();
                     num=datosIniciales[i].id;
                     // detengo la propagacion de evento ya que el elemento padre tiene otro evento del
                     // mismo tipo
@@ -205,18 +223,13 @@ $(document).ready(function(){
     $("#planetas").on("click", function() {
         // hago aparecer los botones avance retroceso pagina y 
         // desplegable de numero de elementos si no está visible
-        if ($('.caracteristicas').is(':hidden') ) {
-            $('.caracteristicas').show();
-        } 
+        ocultarMostraElemHeader();
+         
         // reseteo valor de formularios
-        $('#pers').val('');
-        $('#grupo').val('');
-        $('#nombre').val('');
+        reseteoformulario ('#pers', '#nombre', '#grupo')
         ruta = 'https://dragonball-api.com/api/planets';
         // borro elementos si los hay
-        $('.carta').remove();
-        $('.contenedorCaract').remove();
-        $('.contenedorPlaneta').remove();
+        reseteoIterfaz();
         peticionAsincrona(clasePlanetas);
     });
     // evento al clickar boton personajes
@@ -225,13 +238,9 @@ $(document).ready(function(){
             $('.caracteristicas').show();
         } 
         // reseteo formularios
-        $('#pers').val('');
-        $('#grupo').val('');
-        $('#nombre').val('');
+        reseteoformulario ('#pers', '#nombre', '#grupo')
         ruta = 'https://dragonball-api.com/api/characters';
-        $('.carta').remove();
-        $('.contenedorCaract').remove();
-        $('.contenedorPlaneta').remove();
+        reseteoIterfaz();
         e.stopPropagation();
         peticionAsincrona(clasePersonajes);
     });
@@ -256,9 +265,7 @@ $(document).ready(function(){
     $("#grupo").on('change', function(){
         // condicional para hacer desaparecer los botones de avance-retroceso pagina y
         // formulario de nº elementos
-        if ($('.caracteristicas').is(':visible')) {
-            $('.caracteristicas').hide();
-        } 
+        ocultarMostraElemHeader();
         // borro elementos si los hay
         $('.contenedorCaract').remove();
         $('.contenedorPlaneta').remove();
@@ -275,12 +282,9 @@ $(document).ready(function(){
     });
     
     $('#buscar').on('click', function(e){
-        if ($('.caracteristicas').is(':visible')) {
-            $('.caracteristicas').hide();
-        } 
-        $('.carta').remove();
-        $('.contenedorCaract').remove();
-        $('.contenedorPlaneta').remove();
+        ocultarMostraElemHeader();
+        $('#grupo').val('');
+        reseteoIterfaz();
         let parametroBuscar = $('#nombre').val();
         e.stopPropagation();
         e.preventDefault();
@@ -295,9 +299,7 @@ $(document).ready(function(){
         let rutaSiguiente=links.next;
         ruta = rutaSiguiente;
         if (rutaSiguiente != ""){
-            $('.carta').remove();
-            $('.contenedorCaract').remove();
-            $('.contenedorPlaneta').remove();
+            reseteoIterfaz();
         }
         if (regex.test(ruta)) {
             peticionAsincrona(clasePersonajes);
@@ -310,9 +312,7 @@ $(document).ready(function(){
         let rutaAnterior=links.previous;
         ruta = rutaAnterior;
         if (rutaAnterior!="") {
-            $('.carta').remove();
-            $('.contenedorCaract').remove();
-            $('.contenedorPlaneta').remove();
+            reseteoIterfaz();
         } 
         if (regex.test(ruta)) {
             peticionAsincrona(clasePersonajes);
