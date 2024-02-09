@@ -63,6 +63,12 @@ function fichas_def(datos, clase) {
       $(botonficha).append("Detalles Personaje");
       $(botonficha).addClass("transformacion");
       $(botonficha).attr('id', i);
+  } else if (clase== '.planetas') {
+        let botonficha = document.createElement('button');
+        $(contind).append(botonficha);
+        $(botonficha).append("Nativos");
+        $(botonficha).addClass("tipoPlaneta");
+        $(botonficha).attr('id', i);
   }
   //genero la parte de atras de la ficha
   let contind1=document.createElement('div');
@@ -116,6 +122,8 @@ function detallePersonaje (datos){
     $(caracteristicas).addClass='detalles';
     let textoPersonaje = "<span class='titulo'> Nombre: </span>" + datos.name + "<br>" +
               "<span class='titulo'>Raza: </span>" + datos.race + "<br>" +
+              "<span class='titulo'>Ki: </span>" + datos.ki + "<br>" +
+              "<span class='titulo'>Ki Máximo: </span>" + datos.maxKi + "<br>" +
               "<span class='titulo'>Genero: </span>" + datos.gender + "<br>" +
               "<span class='titulo'>Grupo: </span>" + datos.affiliation + "<br>" +
               "<span class='titulo'>Historia: </span><br>" + datos.description + "<br>";          
@@ -176,6 +184,7 @@ function peticionAsincrona(clase) {
             console.log(data);
             
             links=data.links;
+            if (clase==".personajes") {
             for(let i = 0; i<datosIniciales.length;i++){
                 $("#" + i + ".transformacion").on("click", function(e){
                     ocultarMostraElemHeader();
@@ -205,16 +214,49 @@ function peticionAsincrona(clase) {
                         }
                     })
                 })
-            }   
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // Código a ejecutar si la solicitud falla
-            console.error('Error en la solicitud:');
-            console.error('Código de estado:', jqXHR.status);
-            console.error('Mensaje de error:', textStatus);
-            console.error('Error arrojado:', errorThrown);
+            }
+        }  else if (clase==".planetas") {
+            for(let i = 0; i<datosIniciales.length;i++){
+                $("#" + i + ".tipoPlaneta").on("click", function(e){
+                    ocultarMostraElemHeader();
+                    //reseteo formularios
+                    reseteoformulario (paginas=null, '#nombre', '#grupo')
+                    //elimino elementos presentes
+                    reseteoIterfaz();
+                    num=datosIniciales[i].id;
+                    // detengo la propagacion de evento ya que el elemento padre tiene otro evento del
+                    // mismo tipo
+                    e.stopPropagation();
+                    // pido los datos individuales en funcion del elemento que selecciono 
+                    // con el evento click
+                    rutaDetalle='https://dragonball-api.com/api/planets/'+num;
+                    $.ajax({
+                        url: rutaDetalle,
+                        dataType: 'json',
+                        success: function(data){
+                            datos=data.characters;
+                            fichas_def(datos, '.personajes');
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Código a ejecutar si la solicitud falla
+                            console.error('Error en la solicitud:');
+                            console.error('Código de estado:', jqXHR.status);
+                            console.error('Mensaje de error:', textStatus);
+                            console.error('Error arrojado:', errorThrown);
+                        }
+                    })
+                })
+            }
         }
-    })
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+            // Código a ejecutar si la solicitud falla
+        console.error('Error en la solicitud:');
+        console.error('Código de estado:', jqXHR.status);
+        console.error('Mensaje de error:', textStatus);
+        console.error('Error arrojado:', errorThrown);
+    }
+})
 }
 $(document).ready(function(){    
     // llamo a la funcion para presentar los datos que forman la vista inicial
@@ -285,7 +327,7 @@ $(document).ready(function(){
         ocultarMostraElemHeader();
         $('#grupo').val('');
         reseteoIterfaz();
-        let parametroBuscar = $('#nombre').val();
+        let parametroBuscar = $('#nombre').val().toLowerCase();
         e.stopPropagation();
         e.preventDefault();
         ruta='https://dragonball-api.com/api/characters?name=' + parametroBuscar;

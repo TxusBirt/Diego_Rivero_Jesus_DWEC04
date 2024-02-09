@@ -83,7 +83,7 @@ h1 {
 }
 /* formato de las fichas de los planetas*/
 .planetas .fichas {
-    padding-bottom: 10%;
+    
     height: 400px;
     
 }
@@ -136,7 +136,7 @@ button {
     box-shadow: outset;
 }
 /*clase que incluye los detalles de los personajes*/
-.transformacion {
+.transformacion, .tipoPlaneta {
     font-size: 30px;
     margin-bottom: 0px;
     background-color: rgb(213, 186, 64);
