@@ -80,12 +80,12 @@ function fichas_def(datos, clase) {
                                       '<br><span class="titulo">Ki Máximo: </span>' + datos[datos.length-1].ki);
       }
   }
-  vueltaCartaDef(".carta");
+  vueltaCartaDef(".carta",datos);
 }
 // funcion para girar cada ficha
-function vueltaCartaDef (clase) {
+function vueltaCartaDef (clase,datos) {
     // un giro
-    for(let i =0; i <datosIniciales.length; i++) {
+    for(let i =0; i <datos.length; i++) {
         let element=document.getElementById(i);
         let elementBis=document.getElementById(i+"bis")
         $(clase).on('click', '#'+ i, function(){
@@ -148,8 +148,14 @@ function peticionAsincrona(clase) {
             } else {
                 datosIniciales=data;
             }
-            console.log(ruta);
+            if (datosIniciales.length<1){
+                alert('No hay registros con los parametros de busqueda empleados');
+                location.reload();
+            } 
             fichas_def(datosIniciales, clase);
+            
+            console.log(data);
+            
             links=data.links;
             for(let i = 0; i<datosIniciales.length;i++){
                 $("#" + i + ".transformacion").on("click", function(e){
