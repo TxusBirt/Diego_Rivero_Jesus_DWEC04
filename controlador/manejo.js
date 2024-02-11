@@ -232,7 +232,11 @@ function ocultarBtnOrdenar (){
         $('#orden').hide();
     }
 }
-
+function mostrarBtnOrdenar (){
+    if  ($('#orden').is(':hidden')) {
+        $('#orden').show();
+    }
+}
 // funcion que pide los datos de forma asincrona a la API. En funcion de la clase
 // se pide un dato u otro
 function peticionAsincrona(clase) {
@@ -370,7 +374,7 @@ $(document).ready(function(){
     // evento al clickar boton planetas
     $("#planetas").on("click", function() {
         //escondo boton de ordenar
-        ocultarBtnOrdenar();
+        mostrarBtnOrdenar();
         // hago aparecer los botones avance retroceso pagina y 
         // desplegable de numero de elementos si no está visible
         $('#orden').text('Ordenar Alfabéticamente');
@@ -385,7 +389,7 @@ $(document).ready(function(){
     // evento al clickar boton personajes
     $("#personajes").on("click", function(e) {
         mostrarElemHeader() 
-        ocultarBtnOrdenar();
+        mostrarBtnOrdenar();
         $('#orden').text('Ordenar ki máximo');
         // reseteo formularios
         reseteoformulario ('#pers', '#nombre', '#grupo')
