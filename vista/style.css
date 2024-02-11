@@ -85,7 +85,8 @@ h1 {
 }
 /* las dos caras de cada ficha*/
 .fichas, .fichas1 {
-    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
     position: absolute;
     top: 0;
     left: 0;
@@ -97,9 +98,7 @@ h1 {
 }
 /* formato de las fichas de los planetas*/
 .planetas .fichas {
-    
     height: 400px;
-    
 }
 
 button:active {
