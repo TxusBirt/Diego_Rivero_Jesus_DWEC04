@@ -4,6 +4,7 @@ body {
     background-repeat: no-repeat;  
     background-position: center;
     background-size: cover;  
+    min-height: 1940px;
 }
 /*clase que incluye las herramientas de la cabecera*/
 
@@ -14,7 +15,11 @@ body {
 }
 /* doy alto y ancho de las imagenes de los personajes en funcion del contenedor*/
 .personajes img {
-    height: 60%;
+    height: 75%;
+    width: 75%;
+}
+.transformtotal img {
+    height: 80%;
     width: 75%;
 }
 /* doy alto y ancho de las imagenes de los planetas en funcion del contenedor*/
@@ -24,7 +29,7 @@ body {
     
 }
 /* formateo dispongo los elementos del interior de los contenedores principales*/
-.personajes, .planetas {
+.personajes, .planetas, .transformtotal{
     margin:0 auto;
     width: 70%;
     text-align: center;
@@ -55,6 +60,15 @@ ul {
     justify-content: space-between;
     align-items: center;
 }
+.transformtotal .fichas {
+    padding-bottom: 10%;
+    padding-top: 10%;
+
+}
+.transformtotal .fichas1 {
+    font-size: 25px;
+}
+
 header {
     text-align: center;  
 }
@@ -105,7 +119,7 @@ button:active {
     width: 350px;
     margin-left: 0px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 19px;  
+    font-size: 20px;  
     border-radius: 10px;
 }
 #paginacion {
@@ -157,13 +171,14 @@ button {
     border-radius: 20px;
     border-radius: 20px;
 }
+
 .contenedorPlaneta {
     display: flex;
 }
 .contenedorPlaneta img {
     width: 50%;
 }
-.detallesPersonajes p {
+.detallesPersonajes p, .transformtotal p {
     margin-top: 0px;
     font-family: sans-serif;
     font-style: italic;
