@@ -447,6 +447,7 @@ $(document).ready(function(){
     
     $('#buscar').on('click', function(e){
         ocultarElemHeader();
+        ocultarBtnOrdenar ()
         $('#grupo').val('');
         reseteoIterfaz();
         let parametroBuscar = $('#nombre').val().toLowerCase();
@@ -573,7 +574,7 @@ $(document).ready(function(){
                                     dataType: 'json',
                                     success: function(data){
                                         let datos=data.characters;
-                                        fichas_def(datos, '.personajes');
+                                        fichas_def(datos, clasePersonajes);
                                         for(let i = 0; i<datos.length;i++){
                                             $("#" + i + ".transformacion").on("click", function(e){
                                                 ocultarBtnOrdenar();
