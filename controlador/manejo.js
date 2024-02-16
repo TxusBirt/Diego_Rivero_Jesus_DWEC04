@@ -14,6 +14,8 @@ var regex = /\b\w*characters\w*\b/;
 var regex1 = /\b\w*planets\w*\b/;
 // funciones
 // funcion para covertir en número los textos del valor del maxKi
+
+
 function convertToNumeric (value) {
     //genero array asociativo con clave el texto y valor su valor en numero
     let factors = new Array();
@@ -253,10 +255,9 @@ function peticionAsincrona(clase) {
                 alert('No hay registros con los parametros de busqueda empleados');
                 location.reload();
             } 
-
-           fichas_def(datosIniciales, clase);
+            fichas_def(datosIniciales, clase);
             links=data.links;
-            if (clase==".personajes") {
+            if (clase==clasePersonajes) {
                 for(let i = 0; i<datosIniciales.length;i++){
                     $("#" + i + ".transformacion").on("click", function(e){
                         ocultarBtnOrdenar();
@@ -288,7 +289,7 @@ function peticionAsincrona(clase) {
                         })
                     })
                 }   
-        }  else if (clase==".planetas") {
+        }  else if (clase==clasePlanetas) {
                 for(let i = 0; i<datosIniciales.length;i++){
                     $("#" + i + ".tipoPlaneta").on("click", function(e){
                         ocultarElemHeader();
@@ -371,6 +372,7 @@ function peticionAsincrona(clase) {
 $(document).ready(function(){    
     // llamo a la funcion para presentar los datos que forman la vista inicial
     peticionAsincrona(clasePersonajes);
+    
     // evento al clickar boton planetas
     $("#planetas").on("click", function() {
         //escondo boton de ordenar
@@ -506,12 +508,13 @@ $(document).ready(function(){
                     alert('No hay registros con los parametros de busqueda empleados');
                     location.reload();
                 } 
+                // comparo con las rutas para ordenar personajes o planetas
                 if (regex.test(ruta)){
                     datosIniciales.forEach(character => {
-            // Convertir el valor de maxKi a numérico 
-                    character.maxKi = convertToNumeric(character.maxKi);
+                        // Convertir el valor de maxKi a numérico 
+                        character.maxKi = convertToNumeric(character.maxKi);
                     })
-    
+                    // ordeno array numerico
                     listaOrdenada=datosIniciales.sort((a, b) => b.maxKi - a.maxKi);
                     listaOrdenada.forEach(character => {
                         character.maxKi = convertToText(character.maxKi);
@@ -519,6 +522,7 @@ $(document).ready(function(){
         
                     fichas_def(listaOrdenada,clasePersonajes);
                     } else if (regex1.test(ruta)) {
+                        // ordeno array string
                         listaOrdenada=datosIniciales.sort((a, b) => a.name.localeCompare(b.name));
                         fichas_def(listaOrdenada,clasePlanetas);
                     }
@@ -526,7 +530,7 @@ $(document).ready(function(){
                     for(let i = 0; i<datosIniciales.length;i++){
                     $("#" + i + ".transformacion").on("click", function(e){
                         ocultarBtnOrdenar();
-                        ocultarMostraElemHeader();
+                        ocultarElemHeader();    
                         //reseteo formularios
                         reseteoformulario (paginas=null, '#nombre', '#grupo')
                         //elimino elementos presentes
