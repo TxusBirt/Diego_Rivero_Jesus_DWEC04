@@ -14,8 +14,6 @@ var regex = /\b\w*characters\w*\b/;
 var regex1 = /\b\w*planets\w*\b/;
 // funciones
 // funcion para covertir en número los textos del valor del maxKi
-
-
 function convertToNumeric (value) {
     //genero array asociativo con clave el texto y valor su valor en numero
     let factors = new Array();
@@ -354,10 +352,6 @@ function peticionAsincrona(clase) {
                     })
             }
         } 
-
-
-
-
     },
     error: function(jqXHR, textStatus, errorThrown) {
             // Código a ejecutar si la solicitud falla
@@ -368,7 +362,7 @@ function peticionAsincrona(clase) {
     }
 })
 }
-
+// main
 $(document).ready(function(){    
     // llamo a la funcion para presentar los datos que forman la vista inicial
     peticionAsincrona(clasePersonajes);
@@ -489,6 +483,7 @@ $(document).ready(function(){
             peticionAsincrona(clasePlanetas);
         }
     })
+    // evento para ordenar elementos
     $('#orden').on("click", function(){
         let listaOrdenada;
         //reseteo formularios
@@ -528,36 +523,36 @@ $(document).ready(function(){
                     }
                 if (regex.test(ruta)) {
                     for(let i = 0; i<datosIniciales.length;i++){
-                    $("#" + i + ".transformacion").on("click", function(e){
-                        ocultarBtnOrdenar();
-                        ocultarElemHeader();    
-                        //reseteo formularios
-                        reseteoformulario (paginas=null, '#nombre', '#grupo')
-                        //elimino elementos presentes
-                        reseteoIterfaz();
-                        num=datosIniciales[i].id;
-                        // detengo la propagacion de evento ya que el elemento padre tiene otro evento del
-                        // mismo tipo
-                        e.stopPropagation();
-                        // pido los datos individuales en funcion del elemento que selecciono 
-                        // con el evento click
-                        rutaDetalle='https://dragonball-api.com/api/characters/'+num;
-                        $.ajax({
-                            url: rutaDetalle,
-                            dataType: 'json',
-                            success: function(data){
-                                detallePersonaje(data);
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                // Código a ejecutar si la solicitud falla
-                                console.error('Error en la solicitud:');
-                                console.error('Código de estado:', jqXHR.status);
-                                console.error('Mensaje de error:', textStatus);
-                                console.error('Error arrojado:', errorThrown);
-                            }
+                        $("#" + i + ".transformacion").on("click", function(e){
+                            ocultarBtnOrdenar();
+                            ocultarElemHeader();    
+                            //reseteo formularios
+                            reseteoformulario (paginas=null, '#nombre', '#grupo')
+                            //elimino elementos presentes
+                            reseteoIterfaz();
+                            num=datosIniciales[i].id;
+                            // detengo la propagacion de evento ya que el elemento padre tiene otro evento del
+                            // mismo tipo
+                            e.stopPropagation();
+                            // pido los datos individuales en funcion del elemento que selecciono 
+                            // con el evento click
+                            rutaDetalle='https://dragonball-api.com/api/characters/'+num;
+                            $.ajax({
+                                url: rutaDetalle,
+                                dataType: 'json',
+                                success: function(data){
+                                    detallePersonaje(data);
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    // Código a ejecutar si la solicitud falla
+                                    console.error('Error en la solicitud:');
+                                    console.error('Código de estado:', jqXHR.status);
+                                    console.error('Mensaje de error:', textStatus);
+                                    console.error('Error arrojado:', errorThrown);
+                                }
+                            })
                         })
-                    })
-                }   
+                    }   
                 }  else if (regex1.test(ruta)) {
                         for(let i = 0; i<datosIniciales.length;i++){
                             $("#" + i + ".tipoPlaneta").on("click", function(e){
@@ -582,7 +577,7 @@ $(document).ready(function(){
                                         for(let i = 0; i<datos.length;i++){
                                             $("#" + i + ".transformacion").on("click", function(e){
                                                 ocultarBtnOrdenar();
-                                                ocultarMostraElemHeader();
+                                                ocultarElemHeader();    
                                                 //reseteo formularios
                                                 reseteoformulario (paginas=null, '#nombre', '#grupo')
                                                 //elimino elementos presentes
